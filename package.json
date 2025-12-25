@@ -1,0 +1,42 @@
+{
+  "name": "gpassword",
+  "version": "1.0.0",
+  "description": "A simple password generator written in Go and HTMX, styled with TailwindCSS.",
+  "author": "Matteo Veraldi <mattveraldi@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattveraldi/gpassword.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mattveraldi/gpassword/issues"
+  },
+  "homepage": "https://github.com/mattveraldi/gpassword#readme",
+  "scripts": {
+    "dev": "concurrently -c red,blue \"pnpm:run dev:go\" \"pnpm:run dev:css\"",
+    "dev:go": "go run gpassword.go",
+    "dev:css": "tailwindcss build -o static/css/tailwind.css --watch",
+    "build": "pnpm run build:css && go build -o gpassword gpassword.go",
+    "build:css": "tailwindcss build -o static/css/tailwind.css",
+    "build:go": "go build -o gpassword gpassword.go"
+  },
+  "packageManager": "pnpm@10.23.0",
+  "keywords": [
+    "password",
+    "generator",
+    "go",
+    "tailwindcss",
+    "htmx"
+  ],
+  "engines": {
+    "node": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "pnpm": ">=10.0.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

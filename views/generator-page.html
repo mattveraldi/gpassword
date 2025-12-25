@@ -1,0 +1,54 @@
+{{ block "generator-page" . }}
+<form hx-post="/password" hx-target="#password-container"
+  class="flex flex-col w-[80%] max-w-[500px] mt-[50vh] -translate-y-1/2">
+  <label for="password-input" class="text-2xl md:text-5xl text-center font-medium">Genera una password
+    <br />casuale e
+    sicura</label>
+  <div class="relative mt-2 md:mt-4">
+    <section class="p-4 flex gap-4 md:gap-6 w-fit h-14 md:h-20 bg-transparent absolute z-20 right-0 md:text-lg">
+      <button type="submit"><i class="fa fa-recycle"></i></button>
+      <button type="button" onclick="copyToClipboard()"><i class="fa fa-clone text-blue-700"></i></button>
+    </section>
+    <div
+      class="rounded-lg w-full h-14 md:h-20 bg-gradient-to-r from-transparent to-white from-30% to-80%  absolute z-10 pointer-events-none border border-blue-200">
+    </div>
+    <div id="password-container" hx-get="/password" hx-trigger="load" hx-target="this">
+    </div>
+    <div class="rounded-lg w-full h-14 md:h-20 bg-white"></div>
+  </div>
+  <details class="p-2 md:p-4 rounded-lg w-full min-h-14 md:min-h-20 bg-white border border-blue-200 mt-4">
+    <summary class="mt-[8px]">Impostazioni</summary>
+    <h2 class="ml-2"><small>Scegli quali simboli includere e poi rigenera la password.</small></h2>
+    <section class="grid grid-cols-5 p-2 place-items-start">
+      {{ range .Symbols }}
+      <label class="flex gap-2 items-center">
+        <input type="checkbox" checked="true" name="{{ . }}" />
+        {{ . }}
+      </label>
+      {{ end }}
+    </section>
+  </details>
+</form>
+<div id="copy-alert"
+  class="hidden absolute w-full bottom-0 left-0 z-50 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 max-w-[500px]"
+  role="alert">
+  <p class="font-bold">Copiato!</p>
+  <p>La password è stata copiata negli appunti!</p>
+</div>
+<script>
+  let timer = null
+  function copyToClipboard() {
+    if (navigator.clipboard) {
+      if (timer) clearTimeout(timer)
+      const passwordInput = document.querySelector("#password-input");
+      const alert = document.querySelector("#copy-alert");
+      navigator.clipboard
+        .writeText(passwordInput.value)
+      alert.classList.toggle("hidden")
+      timer = setTimeout(() => {
+        alert.classList.toggle("hidden")
+      }, 2000)
+    }
+  }
+</script>
+{{ end }}
